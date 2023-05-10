@@ -1,0 +1,87 @@
+[] Organização
+
+- @ListarTodasOrganizações X
+- @DetalharOrganização X
+- @AtualizarOrganização X
+- @RemoverOrganização X
+
+- @ListarFuncionarios
+- @DetalharFuncionario
+- @AdicionarFuncionarios
+- @AtualizarFuncionarios
+- @RemoverFuncionarios
+
+Estrutura: {
+id: uuid
+name: string
+email: string
+password: string
+employees: array
+customers: array
+}
+
+---
+
+[] Usuario
+
+- @ListarUsuarios
+- @DetalharUsuario
+- @CriarUsuario
+- @AtualizarUsuario
+- @DeletarUsuario
+
+Estrutura: {
+id: uuid
+name: string
+organization: string
+role: string
+email: string
+password: string
+createdAt: string
+admin: boolean
+}
+
+---
+
+[] Clientes
+
+- @ListarClientes
+- @DetalharCliente
+- @AdicionarCliente
+- @AtualizarCliente
+- @RemoverCliente
+
+Estrutura: {
+id: uuid
+name: string
+externalInfoLink: string
+activityField: string
+posts: number
+delayedPosts: number
+activeCampaigns: number
+}
+
+---
+
+[] Posts
+
+- @ListarPosts
+- @DetalharPost
+- @CriarPost
+- @AtualizarPost
+- @RemoverPost
+
+Estrutura: {
+id: uuid
+customer: string
+name: string
+caption: string
+createdAt: Date
+endLine: Date
+designer: string
+copywriter: string
+readyToSend: boolean
+readyToPost: boolean
+posted: boolean
+}
+
