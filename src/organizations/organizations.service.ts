@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 import { Organization } from './entities/organization.entity'
 
 @Injectable()
@@ -34,14 +34,26 @@ export class OrganizationsService {
     this.organizations.push(newOrganization)
   }
 
-  async update(updateOrganizationDTO: any) {
-    this.organizations.push(updateOrganizationDTO)
+  async update(id, updateOrganizationDTO: any) {
+    const organizationIndex = this.organizations.findIndex(
+      (organization) => organization.id === Number(id),
+    )
+
+    if (organizationIndex <= 0) {
+      throw new NotFoundException(`Organization ${id} not found`)
+    }
+
+    this.organizations[organizationIndex] = updateOrganizationDTO
   }
 
   async remove(id: string) {
     const organizationIndex = this.organizations.findIndex(
       (organization) => organization.id === Number(id),
     )
+
+    if (organizationIndex <= 0) {
+      throw new NotFoundException(`Organization ${id} not found`)
+    }
 
     this.organizations.splice(organizationIndex, 1)
   }

@@ -9,6 +9,8 @@ import {
 } from '@nestjs/common'
 
 import { UsersService } from './users.service'
+import { CreateUserDto } from './dto/create-user.dto/create-user.dto'
+import { UpdateUserDto } from './dto/update-user.dto/update-user.dto'
 
 @Controller('users')
 export class UsersController {
@@ -16,26 +18,26 @@ export class UsersController {
 
   @Get()
   async listAll() {
-    return 'Listagem Usuários'
+    return this.usersService.findAll()
   }
 
   @Get(':id')
   async listOne(@Param('id') id: string) {
-    return `Usuário ${id}`
+    return this.usersService.findOne(id)
   }
 
   @Post()
-  async create(@Body() body) {
-    return body
+  async create(@Body() createUserDTO: CreateUserDto) {
+    this.usersService.create(createUserDTO)
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string) {
-    return `Usuário ${id} foi atualizado`
+  async update(@Param('id') id: string, @Body() updateUserDTO: UpdateUserDto) {
+    this.usersService.update(id, updateUserDTO)
   }
 
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    return `Usuário ${id} foi excluido`
+    this.usersService.remove(id)
   }
 }

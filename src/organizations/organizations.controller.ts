@@ -43,7 +43,7 @@ export class OrganizationsController {
     @Param('id') id: string,
     @Body() updateOrganizationDTO: UpdateOrganizationDto,
   ) {
-    this.organizationsService.update(updateOrganizationDTO)
+    this.organizationsService.update(id, updateOrganizationDTO)
   }
 
   @Delete(':id')
