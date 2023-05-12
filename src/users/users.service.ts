@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common'
+import { randomUUID } from 'crypto'
 import { PrismaService } from 'src/prisma.service'
 
 @Injectable()
@@ -13,9 +14,17 @@ export class UsersService {
     return await this.prisma.user.findUnique({ where: { id } })
   }
 
+  async findOneWithRelations(id: string) {
+    return await this.prisma.user.findUnique({
+      where: { id },
+      include: { organization: true },
+    })
+  }
+
   async create(createUserDTO: any) {
     await this.prisma.user.create({
       data: {
+        id: randomUUID(),
         ...createUserDTO,
       },
     })

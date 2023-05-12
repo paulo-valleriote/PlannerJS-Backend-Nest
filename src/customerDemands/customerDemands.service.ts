@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common'
+import { randomUUID } from 'crypto'
 import { PrismaService } from 'src/prisma.service'
 
 @Injectable()
@@ -16,6 +17,7 @@ export class CustomerDemandsService {
   async create(createCustomerDemandDTO: any) {
     await this.prisma.customerDemand.create({
       data: {
+        id: randomUUID(),
         ...createCustomerDemandDTO,
       },
     })

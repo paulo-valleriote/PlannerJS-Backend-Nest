@@ -26,6 +26,11 @@ export class UsersController {
     return this.usersService.findOne(id)
   }
 
+  @Get('details/:id')
+  async listOneWithRelations(@Param('id') id: string) {
+    return this.usersService.findOneWithRelations(id)
+  }
+
   @Post()
   async create(@Body() createUserDTO: CreateUserDto) {
     this.usersService.create(createUserDTO)

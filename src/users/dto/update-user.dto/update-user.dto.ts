@@ -7,6 +7,5 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   @IsString()
   organizationId: string
 
-  @IsString({ each: true })
-  customerDemandId: string[]
+  customerDemandId?: string
 }

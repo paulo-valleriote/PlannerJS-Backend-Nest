@@ -17,8 +17,7 @@ CREATE TABLE "User" (
     "password" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "admin" BOOLEAN NOT NULL,
-    "organizationId" TEXT NOT NULL,
-    "customerDemandId" TEXT,
+    "organizationId" TEXT,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -49,15 +48,16 @@ CREATE TABLE "CustomerDemand" (
     "readyToPost" BOOLEAN NOT NULL,
     "posted" BOOLEAN NOT NULL,
     "customerId" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
 
     CONSTRAINT "CustomerDemand_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
-CREATE INDEX "User_organizationId_idx" ON "User"("organizationId");
+CREATE UNIQUE INDEX "User_organizationId_key" ON "User"("organizationId");
 
 -- CreateIndex
-CREATE INDEX "User_customerDemandId_idx" ON "User"("customerDemandId");
+CREATE INDEX "User_organizationId_idx" ON "User"("organizationId");
 
 -- CreateIndex
 CREATE INDEX "Customer_organizationId_idx" ON "Customer"("organizationId");
@@ -69,10 +69,10 @@ CREATE INDEX "CustomerDemand_customerId_idx" ON "CustomerDemand"("customerId");
 ALTER TABLE "User" ADD CONSTRAINT "User_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "User" ADD CONSTRAINT "User_customerDemandId_fkey" FOREIGN KEY ("customerDemandId") REFERENCES "CustomerDemand"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "Customer" ADD CONSTRAINT "Customer_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "CustomerDemand" ADD CONSTRAINT "CustomerDemand_customerId_fkey" FOREIGN KEY ("customerId") REFERENCES "Customer"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "CustomerDemand" ADD CONSTRAINT "CustomerDemand_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -31,8 +31,6 @@ export class OrganizationsService {
       await this.prisma.organization.create({
         data: {
           id: randomUUID(),
-          customers: {},
-          employees: {},
           ...createOrganizationDTO,
         },
       })
