@@ -28,7 +28,7 @@ export class CustomersController {
 
   @Post()
   async create(@Body() createCustomerDTO: CreateCustomerDto) {
-    return this.customersService.create(createCustomerDTO)
+    this.customersService.create(createCustomerDTO)
   }
 
   @Patch(':id')
@@ -36,11 +36,11 @@ export class CustomersController {
     @Param('id') id: string,
     @Body() updateCustomerDTO: UpdateCustomerDto,
   ) {
-    return this.customersService.update(id, updateCustomerDTO)
+    this.customersService.update(id, updateCustomerDTO)
   }
 
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    return this.customersService.delete(id)
+    this.customersService.delete(id)
   }
 }

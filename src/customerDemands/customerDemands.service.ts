@@ -1,51 +1,36 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
-import { CustomerDemand } from './entities/customerDemands.entity'
+import { Injectable } from '@nestjs/common'
+import { PrismaService } from 'src/prisma.service'
 
 @Injectable()
 export class CustomerDemandsService {
-  private customerDemand: CustomerDemand[] = [
-    {
-      id: '1',
-      customerId: '1',
-      name: 'Post 1',
-      description: 'Post 1 caption',
-      createdAt: new Date(),
-      endLine: new Date('20/12/2023'),
-      designer: 'John Doe',
-      copywriter: 'John Doe',
-      readyToSend: false,
-      readyToPost: false,
-      posted: false,
-    },
-  ]
+  constructor(private readonly prisma: PrismaService) {}
 
   async findAll() {
-    return this.customerDemand
+    return await this.prisma.customerDemand.findMany()
   }
 
   async findOne(id: string) {
-    const post = this.customerDemand.find((post) => post.id === id)
-
-    if (!post) {
-      throw new NotFoundException(`Post ID ${id} not found`)
-    }
-
-    return post
+    return await this.prisma.customerDemand.findUnique({ where: { id } })
   }
 
-  async create(createPostDTO: any) {
-    this.customerDemand.push(createPostDTO)
+  async create(createCustomerDemandDTO: any) {
+    await this.prisma.customerDemand.create({
+      data: {
+        ...createCustomerDemandDTO,
+      },
+    })
   }
 
-  async update(id: string, updatePostDTO: any) {
-    const postIndex = this.customerDemand.findIndex((post) => post.id === id)
-
-    this.customerDemand[postIndex] = updatePostDTO
+  async update(id: string, updateCustomerDemandDTO: any) {
+    await this.prisma.customerDemand.update({
+      data: {
+        ...updateCustomerDemandDTO,
+      },
+      where: { id },
+    })
   }
 
   async remove(id: string) {
-    const postIndex = this.customerDemand.findIndex((post) => post.id === id)
-
-    if (postIndex >= 0) this.customerDemand.splice(postIndex, 1)
+    await this.prisma.customerDemand.delete({ where: { id } })
   }
 }

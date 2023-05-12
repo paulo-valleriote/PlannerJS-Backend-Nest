@@ -1,38 +1,36 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
+import { PrismaService } from 'src/prisma.service'
 
 @Injectable()
 export class UsersService {
-  private users = []
+  constructor(private readonly prisma: PrismaService) {}
 
-  findAll() {
-    return this.users
+  async findAll() {
+    return await this.prisma.user.findMany()
   }
 
-  findOne(id: string) {
-    return this.users.find((user) => user.id === id)
+  async findOne(id: string) {
+    return await this.prisma.user.findUnique({ where: { id } })
   }
 
-  create(createUserDTO: any) {
-    this.users.push(createUserDTO)
+  async create(createUserDTO: any) {
+    await this.prisma.user.create({
+      data: {
+        ...createUserDTO,
+      },
+    })
   }
 
-  update(id: string, updateUserDTO: any) {
-    const userIndex = this.users.findIndex((user) => user.id === id)
-
-    if (userIndex <= 0) {
-      throw new NotFoundException(`User ${id} not found`)
-    }
-
-    this.users[userIndex] = updateUserDTO
+  async update(id: string, updateUserDTO: any) {
+    await this.prisma.user.update({
+      data: {
+        ...updateUserDTO,
+      },
+      where: { id },
+    })
   }
 
-  remove(id: string) {
-    const userIndex = this.users.findIndex((user) => user.id === id)
-
-    if (userIndex <= 0) {
-      throw new NotFoundException(`User ${id} not found`)
-    }
-
-    this.users.splice(userIndex, 1)
+  async remove(id: string) {
+    await this.prisma.user.delete({ where: { id } })
   }
 }

@@ -29,16 +29,16 @@ export class CustomerDemandsController {
   }
 
   @Post()
-  async create(@Body() createPostDTO: CreateCustomerDemandsDto) {
-    await this.customerDemandsService.create(createPostDTO)
+  async create(@Body() createCustomerDemandDTO: CreateCustomerDemandsDto) {
+    await this.customerDemandsService.create(createCustomerDemandDTO)
   }
 
   @Patch(':id')
   async update(
     @Param('id') id: string,
-    @Body() updatePostDTO: UpdateCustomerDemandsDto,
+    @Body() updateCustomerDemandDTO: UpdateCustomerDemandsDto,
   ) {
-    await this.customerDemandsService.update(id, updatePostDTO)
+    await this.customerDemandsService.update(id, updateCustomerDemandDTO)
   }
 
   @Delete(':id')

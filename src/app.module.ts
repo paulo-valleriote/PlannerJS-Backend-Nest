@@ -6,7 +6,6 @@ import { CustomerDemandsModule } from './customerDemands/customerDemands.module'
 import { CustomersModule } from './customers/customers.module'
 import { OrganizationsModule } from './organizations/organizations.module'
 import { UsersModule } from './users/users.module'
-
 @Module({
   imports: [
     CustomerDemandsModule,

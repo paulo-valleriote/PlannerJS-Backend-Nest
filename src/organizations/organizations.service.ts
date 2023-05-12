@@ -20,7 +20,7 @@ export class OrganizationsService {
 
   async listOne(id: string) {
     try {
-      return await this.prisma.organization.findFirst({ where: { id } })
+      return await this.prisma.organization.findUnique({ where: { id } })
     } catch (err) {
       throw new NotFoundException(err.message)
     }
@@ -46,7 +46,9 @@ export class OrganizationsService {
       await this.prisma.organization.update({
         where: { id },
         data: {
-          ...updateOrganizationDTO,
+          name: updateOrganizationDTO.name,
+          email: updateOrganizationDTO.email,
+          password: updateOrganizationDTO.password,
         },
       })
     } catch (err) {
