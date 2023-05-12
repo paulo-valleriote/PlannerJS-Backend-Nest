@@ -3,12 +3,11 @@
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://pmv:admin@localhost:5432/planner?schema=NAME&¨sslmode=prefer"
 }
 
 generator client {
-  provider      = "prisma-client-js"
-  binaryTargets = ["native", "debian-openssl-1.1.x", "linux-musl"]
+  provider = "prisma-client-js"
 }
 
 model Organization {
@@ -28,9 +27,9 @@ model User {
   password         String
   createdAt        DateTime        @default(now())
   admin            Boolean
-  organization     Organization    @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  organization     Organization?   @relation(fields: [organizationId], references: [id])
   organizationId   String
-  customerDemand   CustomerDemand? @relation(fields: [customerDemandId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  customerDemand   CustomerDemand? @relation(fields: [customerDemandId], references: [id])
   customerDemandId String?
 
   @@index([organizationId])
