@@ -29,8 +29,17 @@ module.exports = {
       'error',
       {
         'endOfLine': 'auto',
-        'semi': false
+        'semi': false,
+        'quotes': 'single'
       }
+    ],
+    "semi": [
+      "error",
+      "never"
+    ],
+    "quotes": [
+      "error",
+      "single"
     ]
   },
 };

@@ -19,7 +19,7 @@ export class OrganizationsController {
 
   @Get()
   async listAll() {
-    return this.organizationsService.listAll()
+    return await this.organizationsService.listAll()
   }
 
   @Get(':id')
@@ -35,7 +35,7 @@ export class OrganizationsController {
 
   @Post()
   async create(@Body() createOrganizationDTO: CreateOrganizationDto) {
-    this.organizationsService.create(createOrganizationDTO)
+    await this.organizationsService.create(createOrganizationDTO)
   }
 
   @Patch(':id')

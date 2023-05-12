@@ -1,60 +1,64 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
-import { Organization } from './entities/organization.entity'
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common'
+import { PrismaService } from 'src/prisma.service'
+import { randomUUID } from 'node:crypto'
 
 @Injectable()
 export class OrganizationsService {
-  private organizations: Organization[] = [
-    {
-      id: 1,
-      name: 'Organization 1',
-      email: 'organization@example.com',
-      password: 'aSdasd21311',
-      customers: ['john doe'],
-      employees: ['john doe'],
-    },
-  ]
+  constructor(private readonly prisma: PrismaService) {}
 
   async listAll() {
-    return this.organizations
+    try {
+      return await this.prisma.organization.findMany()
+    } catch (err) {
+      throw new NotFoundException(err.message)
+    }
   }
 
   async listOne(id: string) {
-    return this.organizations.find(
-      (organization) => organization.id === Number(id),
-    )
+    try {
+      return await this.prisma.organization.findFirst({ where: { id } })
+    } catch (err) {
+      throw new NotFoundException(err.message)
+    }
   }
 
   async create(createOrganizationDTO: any) {
-    const newOrganization = {
-      ...createOrganizationDTO,
-      employees: [],
-      customers: [],
+    try {
+      await this.prisma.organization.create({
+        data: {
+          id: randomUUID(),
+          customers: {},
+          employees: {},
+          ...createOrganizationDTO,
+        },
+      })
+    } catch (err) {
+      throw new BadRequestException(err.message)
     }
-
-    this.organizations.push(newOrganization)
   }
 
-  async update(id, updateOrganizationDTO: any) {
-    const organizationIndex = this.organizations.findIndex(
-      (organization) => organization.id === Number(id),
-    )
-
-    if (organizationIndex <= 0) {
-      throw new NotFoundException(`Organization ${id} not found`)
+  async update(id: string, updateOrganizationDTO: any) {
+    try {
+      await this.prisma.organization.update({
+        where: { id },
+        data: {
+          ...updateOrganizationDTO,
+        },
+      })
+    } catch (err) {
+      throw new BadRequestException(err.message)
     }
-
-    this.organizations[organizationIndex] = updateOrganizationDTO
   }
 
   async remove(id: string) {
-    const organizationIndex = this.organizations.findIndex(
-      (organization) => organization.id === Number(id),
-    )
-
-    if (organizationIndex <= 0) {
-      throw new NotFoundException(`Organization ${id} not found`)
+    try {
+      await this.prisma.organization.delete({ where: { id } })
+    } catch (err) {
+      throw new BadRequestException(err.message)
     }
-
-    this.organizations.splice(organizationIndex, 1)
   }
 }

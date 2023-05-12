@@ -1,14 +1,11 @@
-FROM node:alpine
+FROM node:18
 
-WORKDIR /usr/src/api
+WORKDIR /usr/src/app
 
 COPY . .
-COPY ./.env.production ./.env
 
-RUN npm install --quiet --no-optional --no-fund --loglevel=error
+RUN npm i
 
 RUN npm run build
 
 EXPOSE 3000
-
-CMD ["npm", "run", "start:dev"]
