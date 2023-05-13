@@ -8,29 +8,37 @@ import {
   Post,
 } from '@nestjs/common'
 
-import { CustomerDemandsService } from '../../customerDemands/customerDemands.service'
-import { CreateCustomerDemandsDto } from './dto/create-customerDemand.dto/create-customerDemands.dto'
-import { UpdateCustomerDemandsDto } from './dto/update-customerDemand.dto/update-customerDemands.dto'
+import { UpdateCustomerDemandsDto } from './../dtos/customerDemands/update-customerDemand.dto/update-customerDemands.dto'
+import { CreateCustomerDemandsDto } from './../dtos/customerDemands/create-customerDemand.dto/create-customerDemands.dto'
+import { CreateCustomerDemand } from 'src/app/use-cases/CustomerDemand/create-customer-demand'
+import { UpdateCustomerDemand } from 'src/app/use-cases/CustomerDemand/update-customer-demand'
+import { DeleteCustomerDemand } from 'src/app/use-cases/CustomerDemand/delete-customer-demand'
+import { ListCustomerDemand } from 'src/app/use-cases/CustomerDemand/list-customer-demand'
+import { FindCustomerDemandById } from 'src/app/use-cases/CustomerDemand/find-customer-demand-by-id'
 
 @Controller('posts')
 export class CustomerDemandsController {
   constructor(
-    private readonly customerDemandsService: CustomerDemandsService,
+    private createCustomerDemand: CreateCustomerDemand,
+    private updateCustomerDemand: UpdateCustomerDemand,
+    private deleteCustomerDemand: DeleteCustomerDemand,
+    private listCustomerDemands: ListCustomerDemand,
+    private findCustomerDemandById: FindCustomerDemandById,
   ) {}
 
   @Get()
   async findAll() {
-    return await this.customerDemandsService.findAll()
+    return await this.listCustomerDemands.execute()
   }
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    return await this.customerDemandsService.findOne(id)
+    return await this.findCustomerDemandById.execute(id)
   }
 
   @Post()
   async create(@Body() createCustomerDemandDTO: CreateCustomerDemandsDto) {
-    await this.customerDemandsService.create(createCustomerDemandDTO)
+    await this.createCustomerDemand.execute(createCustomerDemandDTO)
   }
 
   @Patch(':id')
@@ -38,11 +46,14 @@ export class CustomerDemandsController {
     @Param('id') id: string,
     @Body() updateCustomerDemandDTO: UpdateCustomerDemandsDto,
   ) {
-    await this.customerDemandsService.update(id, updateCustomerDemandDTO)
+    await this.updateCustomerDemand.execute({
+      id,
+      customerDemand: updateCustomerDemandDTO,
+    })
   }
 
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    await this.customerDemandsService.remove(id)
+    await this.deleteCustomerDemand.execute(id)
   }
 }

@@ -9,22 +9,33 @@ import {
   Post,
 } from '@nestjs/common'
 
-import { OrganizationsService } from '../../organizations/organizations.service'
-import { CreateOrganizationDto } from './dto/create-organization.dto/create-organization.dto'
-import { UpdateOrganizationDto } from './dto/update-organization.dto/update-organization.dto'
+import { CreateOrganization } from 'src/app/use-cases/Organization/create-organization'
+import { UpdateOrganization } from 'src/app/use-cases/Organization/update-organization'
+import { DeleteOrganization } from 'src/app/use-cases/Organization/delete-organization'
+import { ListOrganization } from 'src/app/use-cases/Organization/list-organization'
+import { FindOrganizationById } from 'src/app/use-cases/Organization/find-organization-by-id'
+
+import { CreateOrganizationDto } from './../dtos/organizations/create-organization.dto/create-organization.dto'
+import { UpdateOrganizationDto } from './../dtos/organizations/update-organization.dto/update-organization.dto'
 
 @Controller('organizations')
 export class OrganizationsController {
-  constructor(private readonly organizationsService: OrganizationsService) {}
+  constructor(
+    private createOrganization: CreateOrganization,
+    private updateOrganization: UpdateOrganization,
+    private deleteOrganization: DeleteOrganization,
+    private listOrganization: ListOrganization,
+    private findOrganizationById: FindOrganizationById,
+  ) {}
 
   @Get()
   async listAll() {
-    return await this.organizationsService.listAll()
+    return await this.listOrganization.execute()
   }
 
   @Get(':id')
   async listOne(@Param('id') id: string) {
-    const organization = await this.organizationsService.listOne(id)
+    const organization = await this.findOrganizationById.execute(id)
 
     if (!organization) {
       throw new NotFoundException(`Organization ID ${id} not found`)
@@ -35,7 +46,7 @@ export class OrganizationsController {
 
   @Post()
   async create(@Body() createOrganizationDTO: CreateOrganizationDto) {
-    await this.organizationsService.create(createOrganizationDTO)
+    await this.createOrganization.execute(createOrganizationDTO)
   }
 
   @Patch(':id')
@@ -43,12 +54,12 @@ export class OrganizationsController {
     @Param('id') id: string,
     @Body() updateOrganizationDTO: UpdateOrganizationDto,
   ) {
-    this.organizationsService.update(id, updateOrganizationDTO)
+    this.updateOrganization.execute({ id, organization: updateOrganizationDTO })
   }
 
   @Delete(':id')
   async delete(@Param('id') id: string) {
-    this.organizationsService.remove(id)
+    this.deleteOrganization.execute(id)
   }
 
   @Get('employee')

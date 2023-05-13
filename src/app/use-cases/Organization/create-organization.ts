@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { Organization } from 'src/app/entities/Organization/organization.entity'
 import { OrganizationRepository } from 'src/app/repositories/Organization/organization-repository'
 
-interface CreateUserRequest {
+interface CreateOrganizationRequest {
   name: string
   email: string
   password: string
@@ -12,7 +12,7 @@ interface CreateUserRequest {
 export class CreateOrganization {
   constructor(private organizationsRepository: OrganizationRepository) {}
 
-  async execute(request: CreateUserRequest): Promise<Organization> {
+  async execute(request: CreateOrganizationRequest): Promise<Organization> {
     const organization = new Organization({
       ...request,
     })
