@@ -1,21 +1,23 @@
+import { randomUUID } from 'crypto'
 import { Replace } from 'src/helpers/Replace'
 
 export interface UserProps {
-  id: string
   name: string
   role: string
   email: string
   password: string
   createdAt: Date
   admin: boolean
-  organizationId: string
+  organizationId?: string | null
   customerDemandId?: string[] | null
 }
 
 export class User {
+  private _id: string
   private props: UserProps
 
   constructor(props: Replace<UserProps, { createdAt?: Date }>) {
+    this._id = randomUUID()
     this.props = {
       ...props,
       createdAt: props.createdAt ?? new Date(),
@@ -23,7 +25,7 @@ export class User {
   }
 
   public get id(): string {
-    return this.props.id
+    return this._id
   }
 
   public set name(name: string) {
@@ -70,15 +72,23 @@ export class User {
     return this.props.admin
   }
 
-  public set organizationId(organizationId: string) {
+  public set organizationId(organizationId: string | null | undefined) {
+    if (!organizationId) {
+      throw new Error('Invalid organizationId provided')
+    }
+
     this.props.organizationId = organizationId
   }
 
-  public get organizationId(): string {
+  public get organizationId(): string | null | undefined {
     return this.props.organizationId
   }
 
   public set customerDemandId(customerDemandId: string[] | null | undefined) {
+    if (!customerDemandId) {
+      throw new Error('Invalid customerDemandId provided')
+    }
+
     this.props.customerDemandId = customerDemandId
   }
 

@@ -8,7 +8,7 @@ import {
   Post,
 } from '@nestjs/common'
 
-import { CustomersService } from './customers.service'
+import { CustomersService } from '../../customers/customers.service'
 import { CreateCustomerDto } from './dto/create-customer.dto/create-customer.dto'
 import { UpdateCustomerDto } from './dto/update-customer.dto/update-customer.dto'
 

@@ -5,7 +5,7 @@ import { CreateUserDto } from '../create-user.dto/create-user.dto'
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {
   @IsString()
-  organizationId: string
+  organizationId?: string
 
   customerDemandId?: string
 }

@@ -3,7 +3,6 @@ import { User } from './user.entity'
 describe('User', () => {
   it('should be able to create a new user', () => {
     const user = new User({
-      id: '1',
       name: 'John Doe',
       role: 'admin',
       email: 'foo@bar.com',
@@ -18,7 +17,6 @@ describe('User', () => {
 
   it('should be able to destructuring an user object', () => {
     const user = new User({
-      id: '1',
       name: 'John Doe',
       role: 'admin',
       email: 'foo@bar.com',
@@ -35,7 +33,6 @@ describe('User', () => {
 
   it('should be able to get values from getters', () => {
     const user = new User({
-      id: '1',
       name: 'John Doe',
       role: 'admin',
       email: 'foo@bar.com',
@@ -52,7 +49,6 @@ describe('User', () => {
 
   it('should be able to set values throught setters', () => {
     const user = new User({
-      id: '1',
       name: 'John Doe',
       role: 'admin',
       email: 'foo@bar.com',

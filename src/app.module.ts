@@ -1,20 +1,8 @@
 import { Module } from '@nestjs/common'
-import { AppController } from './app.controller'
-import { AppService } from './app.service'
 
-import { CustomerDemandsModule } from './infra/customerDemands/customerDemands.module'
-import { CustomersModule } from './infra/customers/customers.module'
-import { OrganizationsModule } from './infra/organizations/organizations.module'
-import { UsersModule } from './infra/users/users.module'
-import { AuthService } from './auth/auth.service'
+import { HttpModule } from './infra/http/http.module'
+import { DatabaseModule } from './infra/database/database.module'
 @Module({
-  imports: [
-    CustomerDemandsModule,
-    CustomersModule,
-    OrganizationsModule,
-    UsersModule,
-  ],
-  controllers: [AppController],
-  providers: [AppService, AuthService],
+  imports: [HttpModule, DatabaseModule],
 })
 export class AppModule {}

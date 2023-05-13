@@ -11,12 +11,13 @@ generator client {
 }
 
 model Organization {
-  id       String     @id
-  name     String
-  email    String
-  password String
-  User     User[]
-  Customer Customer[]
+  id        String     @id
+  name      String
+  email     String
+  password  String
+  createdAt DateTime
+  User      User[]
+  Customer  Customer[]
 }
 
 model User {
@@ -25,10 +26,10 @@ model User {
   role            String
   email           String
   password        String
-  createdAt       DateTime         @default(now())
+  createdAt       DateTime
   admin           Boolean
   organization    Organization?    @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  organizationId  String?          @unique()
+  organizationId  String?
   customerDemands CustomerDemand[]
 
   @@index([organizationId])
@@ -52,7 +53,7 @@ model CustomerDemand {
   id            String    @id
   name          String
   description   String
-  createdAt     DateTime  @default(now())
+  createdAt     DateTime
   endLine       DateTime
   designer      String
   copywriter    String
