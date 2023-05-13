@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { CustomerRepository } from 'src/app/repositories/Customer/customer-repository'
+import { CustomerRepository } from '../../../../src/app/repositories/Customer/customer-repository'
 
 @Injectable()
 export class DeleteCustomer {
