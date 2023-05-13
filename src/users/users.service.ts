@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { randomUUID } from 'crypto'
+import { randomUUID, createHash } from 'crypto'
 import { PrismaService } from 'src/prisma.service'
 
 @Injectable()
