@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common'
-import { PrismaService } from 'src/prisma.service'
+import { PrismaService } from '../prisma.service'
 import { randomUUID } from 'node:crypto'
 
 @Injectable()
@@ -14,7 +14,7 @@ export class OrganizationsService {
     try {
       return await this.prisma.organization.findMany()
     } catch (err) {
-      throw new NotFoundException(err.message)
+      throw new NotFoundException(err)
     }
   }
 
@@ -22,7 +22,7 @@ export class OrganizationsService {
     try {
       return await this.prisma.organization.findUnique({ where: { id } })
     } catch (err) {
-      throw new NotFoundException(err.message)
+      throw new NotFoundException(err)
     }
   }
 
@@ -35,7 +35,7 @@ export class OrganizationsService {
         },
       })
     } catch (err) {
-      throw new BadRequestException(err.message)
+      throw new BadRequestException(err)
     }
   }
 
@@ -50,7 +50,7 @@ export class OrganizationsService {
         },
       })
     } catch (err) {
-      throw new BadRequestException(err.message)
+      throw new BadRequestException(err)
     }
   }
 
@@ -58,7 +58,7 @@ export class OrganizationsService {
     try {
       await this.prisma.organization.delete({ where: { id } })
     } catch (err) {
-      throw new BadRequestException(err.message)
+      throw new BadRequestException(err)
     }
   }
 }
