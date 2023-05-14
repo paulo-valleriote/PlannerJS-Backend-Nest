@@ -1,6 +1,5 @@
 import { User } from '@app/entities/User/user.entity'
 import { UsersRepository } from '@app/repositories/User/users-repository'
-import { PrismaUserMapper } from '@infra/database/prisma/mappers/prisma-user-mapper'
 import { Injectable } from '@nestjs/common'
 
 interface CreateUserRequest {

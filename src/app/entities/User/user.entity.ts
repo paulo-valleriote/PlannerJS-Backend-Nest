@@ -1,3 +1,4 @@
+import { hashSync } from 'bcrypt'
 import { IsBoolean, IsDate, IsString } from 'class-validator'
 import { randomUUID } from 'crypto'
 import { Replace } from 'src/helpers/Replace'
@@ -33,6 +34,7 @@ export class User {
     this._id = randomUUID()
     this.props = {
       ...props,
+      password: hashSync(props.password, 8),
       createdAt: props.createdAt ?? new Date(),
     }
   }
@@ -66,7 +68,7 @@ export class User {
   }
 
   public set password(password: string) {
-    this.props.password = password
+    this.props.password = hashSync(password, 8)
   }
 
   public get password(): string {

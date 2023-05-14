@@ -4,6 +4,7 @@ import { UsersRepository } from '../../../../../src/app/repositories/User/users-
 import { PrismaService } from '../prisma.service'
 import { Injectable } from '@nestjs/common'
 import { UpdateUserDto } from 'src/infra/http/dtos/users/update-user.dto/update-user.dto'
+import { UsersList } from '@infra/http/viewModel/usersList'
 
 @Injectable()
 export class PrismaUserRepository implements UsersRepository {
@@ -46,7 +47,8 @@ export class PrismaUserRepository implements UsersRepository {
       throw new Error(`User ${id} not found`)
     }
 
-    return user
+    const formatedUser = new UsersList().toViewModel(user)
+    return formatedUser
   }
 
   async list(): Promise<ListUserDto[]> {

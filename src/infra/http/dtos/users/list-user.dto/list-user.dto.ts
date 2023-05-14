@@ -1,10 +1,10 @@
 export class ListUserDto {
+  id: string
   name: string
-  role: string
   email: string
   password: string
-  admin: boolean
   createdAt: Date
-  organizationId?: string | null
-  customerDemandId?: string[] | null
+  admin: boolean
+  customerDemands?: object[]
+  organization?: object
 }
