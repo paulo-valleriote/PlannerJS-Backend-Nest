@@ -3,7 +3,7 @@ export class ListCustomerDemandDto {
   name: string
   description: string
   createdAt: Date
-  endLine: Date | null
+  endLine: string | null
   designer: string | null
   copywriter: string | null
   readyToSend?: boolean | undefined

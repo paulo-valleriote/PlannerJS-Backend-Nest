@@ -6,9 +6,10 @@ interface CreateCustomerDemandRequest {
   customerId: string
   name: string
   description: string
-  endLine: Date | null
+  endLine: string | null
   designer: string | null
   copywriter: string | null
+  userId: string
 }
 
 @Injectable()

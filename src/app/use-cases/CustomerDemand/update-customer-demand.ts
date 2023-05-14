@@ -8,7 +8,7 @@ interface UpdateCustomerDemandRequest {
     customerIdToChange?: string
     name?: string
     description?: string
-    endLine?: Date | null
+    endLine?: string
     designer?: string | null
     copywriter?: string | null
     readyToSend?: boolean

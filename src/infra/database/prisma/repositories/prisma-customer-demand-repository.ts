@@ -25,6 +25,7 @@ export class PrismaCustomerDemandRepository
         readyToSend: customerDemand.readyToSend || false,
         readyToPost: customerDemand.readyToPost || false,
         posted: customerDemand.posted || false,
+        customerId: customerDemand.customerId,
       },
     })
   }
@@ -56,7 +57,6 @@ export class PrismaCustomerDemandRepository
         id: customerDemandId,
       },
       include: {
-        activeWorkers: true,
         customer: true,
       },
     })

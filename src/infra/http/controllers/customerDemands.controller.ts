@@ -16,7 +16,7 @@ import { DeleteCustomerDemand } from 'src/app/use-cases/CustomerDemand/delete-cu
 import { ListCustomerDemand } from 'src/app/use-cases/CustomerDemand/list-customer-demand'
 import { FindCustomerDemandById } from 'src/app/use-cases/CustomerDemand/find-customer-demand-by-id'
 
-@Controller('posts')
+@Controller('customer/demand')
 export class CustomerDemandsController {
   constructor(
     private createCustomerDemand: CreateCustomerDemand,
@@ -56,7 +56,7 @@ export class CustomerDemandsController {
       customerDemand: {
         name: updateCustomerDemandDTO.name,
         description: updateCustomerDemandDTO.description,
-        endLine: updateCustomerDemandDTO.endLine,
+        endLine: updateCustomerDemandDTO.endLine as string,
         designer: updateCustomerDemandDTO.designer,
         copywriter: updateCustomerDemandDTO.copywriter,
       },

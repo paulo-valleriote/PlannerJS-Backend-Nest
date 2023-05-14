@@ -38,7 +38,6 @@ export class PrismaUserRepository implements UsersRepository {
     const { ...user } = await this.prismaService.user.findUnique({
       where: { id },
       include: {
-        customerDemands: true,
         organization: true,
       },
     })

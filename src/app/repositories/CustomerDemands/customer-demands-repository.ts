@@ -1,4 +1,4 @@
-import { CustomerDemand } from 'src/app/entities/CustomerDemands/customerDemands.entity'
+import { CustomerDemand } from '@app/entities/CustomerDemands/customerDemands.entity'
 import { ListCustomerDemandDto } from 'src/infra/http/dtos/customerDemands/list-customerDemand.dto/list-customerDemand.dto'
 import { UpdateCustomerDemandsDto } from 'src/infra/http/dtos/customerDemands/update-customerDemand.dto/update-customerDemands.dto'
 

@@ -3,10 +3,11 @@ import { Replace } from 'src/helpers/Replace'
 
 export interface CustomerDemandProps {
   customerId: string
+  userId: string
   name: string
   description: string
   createdAt: Date
-  endLine: Date | null
+  endLine: string | null
   designer: string | null
   copywriter: string | null
   readyToSend?: boolean | undefined
@@ -46,6 +47,14 @@ export class CustomerDemand {
     return this.props.description
   }
 
+  public set userId(userId: string) {
+    this.props.userId = userId
+  }
+
+  public get userId(): string {
+    return this.props.userId
+  }
+
   public set createdAt(createdAt: Date) {
     this.props.createdAt = createdAt
   }
@@ -54,11 +63,11 @@ export class CustomerDemand {
     return this.props.createdAt
   }
 
-  public set endLine(endLine: Date | null) {
+  public set endLine(endLine: string | null) {
     this.props.endLine = endLine || null
   }
 
-  public get endLine(): Date | null {
+  public get endLine(): string | null {
     return this.props.endLine
   }
 

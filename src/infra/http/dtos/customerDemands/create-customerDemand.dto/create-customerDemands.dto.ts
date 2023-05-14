@@ -1,8 +1,11 @@
-import { IsDate, IsString } from 'class-validator'
+import { IsString } from 'class-validator'
 
 export class CreateCustomerDemandsDto {
   @IsString()
   customerId: string
+
+  @IsString()
+  userId: string
 
   @IsString()
   name: string
@@ -10,8 +13,8 @@ export class CreateCustomerDemandsDto {
   @IsString()
   description: string
 
-  @IsDate()
-  endLine: Date | null
+  @IsString()
+  endLine: string
 
   @IsString()
   designer: string | null
