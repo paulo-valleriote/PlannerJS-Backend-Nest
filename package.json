@@ -1,9 +1,9 @@
 {
-  "name": "nest-training",
+  "name": "Planner-NestJS-Study",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
-  "private": true,
+  "description": "Personal project to study NestJS and Jest",
+  "author": "Paulo Valleriote",
+  "private": false,
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
