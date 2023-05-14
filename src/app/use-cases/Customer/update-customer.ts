@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { CustomerRepository } from '@app/repositories/Customer/customer-repository'
+import { EntityNotFound } from '../models/errors/entityNotFound'
 
 interface UpdateCustomerRequest {
   id: string
@@ -13,10 +14,14 @@ interface UpdateCustomerRequest {
 
 @Injectable()
 export class UpdateCustomer {
-  constructor(private customerDemandRepository: CustomerRepository) {}
+  constructor(private customerRepository: CustomerRepository) {}
 
   async execute(request: UpdateCustomerRequest): Promise<void> {
-    await this.customerDemandRepository.update(request.id, {
+    if (!request.id) {
+      throw new EntityNotFound('Customer')
+    }
+
+    await this.customerRepository.update(request.id, {
       ...request.customer,
     })
   }

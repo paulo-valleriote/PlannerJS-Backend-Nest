@@ -11,7 +11,7 @@ interface CreateCustomerRequest {
 
 @Injectable()
 export class CreateCustomer {
-  constructor(private customerDemandRepository: CustomerRepository) {}
+  constructor(private customerRepository: CustomerRepository) {}
 
   async execute(request: CreateCustomerRequest): Promise<Customer> {
     const customer = new Customer({
@@ -19,7 +19,7 @@ export class CreateCustomer {
       externalInfoLink: request.externalInfoLink || '',
     })
 
-    await this.customerDemandRepository.create(customer)
+    await this.customerRepository.create(customer)
 
     return customer
   }

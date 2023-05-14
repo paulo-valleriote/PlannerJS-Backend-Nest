@@ -1,5 +1,6 @@
 import { UsersRepository } from '@app/repositories/User/users-repository'
 import { Injectable } from '@nestjs/common'
+import { EntityIdNotProvidedError } from '../models/errors/entityIdNotProvided'
 
 interface UpdateUserRequest {
   id: string
@@ -19,6 +20,10 @@ export class UpdateUser {
   constructor(private usersRepository: UsersRepository) {}
 
   async execute(request: UpdateUserRequest): Promise<void> {
+    if (!request.id) {
+      throw new EntityIdNotProvidedError('User')
+    }
+
     await this.usersRepository.update(request.id, {
       ...request.user,
     })

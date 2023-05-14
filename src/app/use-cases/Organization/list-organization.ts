@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { OrganizationRepository } from '@app/repositories/Organization/organization-repository'
 import { ListOrganizationDto } from '@infra/http/dtos/organizations/list-organization.dto/list-organization.dto'
+import { EntityNotFound } from '../models/errors/entityNotFound'
 
 @Injectable()
 export class ListOrganization {
@@ -10,7 +11,7 @@ export class ListOrganization {
     const organizations = await this.organizationsRepository.list()
 
     if (!organizations) {
-      throw new Error('Organizations not found')
+      throw new EntityNotFound('Organizations')
     }
 
     return organizations
