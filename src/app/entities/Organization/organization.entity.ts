@@ -1,10 +1,18 @@
+import { IsDate, IsString } from 'class-validator'
 import { randomUUID } from 'crypto'
 import { Replace } from 'src/helpers/Replace'
 
-export interface OrganizationProps {
+export class OrganizationProps {
+  @IsString()
   name: string
+
+  @IsString()
   email: string
+
+  @IsString()
   password: string
+
+  @IsDate()
   createdAt: Date
 }
 

@@ -38,12 +38,12 @@ export class PrismaCustomerDemandRepository
       data: {
         name: customerDemand.name,
         description: customerDemand.description,
-        copywriter: customerDemand.copywriter || '',
-        designer: customerDemand.designer || '',
-        endLine: customerDemand.endLine || '',
-        readyToSend: customerDemand.readyToSend || false,
-        readyToPost: customerDemand.readyToPost || false,
-        posted: customerDemand.posted || false,
+        copywriter: customerDemand.copywriter,
+        designer: customerDemand.designer,
+        endLine: customerDemand.endLine,
+        readyToSend: customerDemand.readyToSend,
+        readyToPost: customerDemand.readyToPost,
+        posted: customerDemand.posted,
       },
       where: {
         id: customerDemandId,

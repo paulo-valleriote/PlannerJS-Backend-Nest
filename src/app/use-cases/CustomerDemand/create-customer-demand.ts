@@ -6,9 +6,9 @@ interface CreateCustomerDemandRequest {
   customerId: string
   name: string
   description: string
-  endLine: string | null
-  designer: string | null
-  copywriter: string | null
+  endLine: string
+  designer: string
+  copywriter: string
   userId: string
 }
 
@@ -19,7 +19,6 @@ export class CreateCustomerDemand {
   async execute(request: CreateCustomerDemandRequest): Promise<CustomerDemand> {
     const customerDemand = new CustomerDemand({
       ...request,
-      endLine: request.endLine || null,
     })
 
     await this.customerDemandRepository.create(customerDemand)

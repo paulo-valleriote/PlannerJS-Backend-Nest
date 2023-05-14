@@ -40,7 +40,6 @@ model Customer {
   name                String
   externalInfoLink    String
   activityField       String
-  delayedPosts        Int
   activeCampaigns     Int
   currentOrganization Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   organizationId      String

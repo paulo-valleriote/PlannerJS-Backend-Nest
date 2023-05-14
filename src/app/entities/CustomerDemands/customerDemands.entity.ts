@@ -1,15 +1,28 @@
+import { BadRequestException } from '@nestjs/common'
+import { IsDate, IsString } from 'class-validator'
 import { randomUUID } from 'crypto'
 import { Replace } from 'src/helpers/Replace'
+import { StringLiteralLike } from 'typescript'
 
-export interface CustomerDemandProps {
+export class CustomerDemandProps {
+  @IsString()
   customerId: string
+
+  @IsString()
   userId: string
+
+  @IsString()
   name: string
+
+  @IsString()
   description: string
+
+  @IsDate()
   createdAt: Date
-  endLine: string | null
-  designer: string | null
-  copywriter: string | null
+
+  endLine: string
+  designer: string
+  copywriter: string
   readyToSend?: boolean | undefined
   readyToPost?: boolean | undefined
   posted?: boolean | undefined
@@ -63,27 +76,36 @@ export class CustomerDemand {
     return this.props.createdAt
   }
 
-  public set endLine(endLine: string | null) {
-    this.props.endLine = endLine || null
+  public set endLine(endLine: string) {
+    if (typeof endLine !== 'string') {
+      throw new BadRequestException('End Line must be a string')
+    }
+    this.props.endLine = endLine
   }
 
-  public get endLine(): string | null {
+  public get endLine(): string {
     return this.props.endLine
   }
 
-  public set designer(designer: string | null) {
-    this.props.designer = designer || null
+  public set designer(designer: string) {
+    if (typeof designer !== 'string') {
+      throw new BadRequestException('Designer must be a string')
+    }
+    this.props.designer = designer
   }
 
-  public get designer(): string | null {
+  public get designer(): string {
     return this.props.designer
   }
 
-  public set copywriter(copywriter: string | null) {
-    this.props.copywriter = copywriter || null
+  public set copywriter(copywriter: string) {
+    if (typeof copywriter !== 'string') {
+      throw new BadRequestException('Copywriter must be a string')
+    }
+    this.props.copywriter
   }
 
-  public get copywriter(): string | null {
+  public get copywriter(): string {
     return this.props.copywriter
   }
 

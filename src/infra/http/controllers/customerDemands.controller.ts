@@ -46,19 +46,11 @@ export class CustomerDemandsController {
     @Param('id') id: string,
     @Body() updateCustomerDemandDTO: UpdateCustomerDemandsDto,
   ) {
-    if (!id || !updateCustomerDemandDTO.customerId) {
-      throw new Error('Missing identifications')
-    }
-
     await this.updateCustomerDemand.execute({
       customerDemandId: id,
-      customerId: updateCustomerDemandDTO.customerId,
+      customerId: updateCustomerDemandDTO.customerId as string,
       customerDemand: {
-        name: updateCustomerDemandDTO.name,
-        description: updateCustomerDemandDTO.description,
-        endLine: updateCustomerDemandDTO.endLine as string,
-        designer: updateCustomerDemandDTO.designer,
-        copywriter: updateCustomerDemandDTO.copywriter,
+        ...updateCustomerDemandDTO,
       },
     })
   }

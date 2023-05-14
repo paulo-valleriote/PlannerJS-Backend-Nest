@@ -1,13 +1,26 @@
+import { IsBoolean, IsDate, IsString } from 'class-validator'
 import { randomUUID } from 'crypto'
 import { Replace } from 'src/helpers/Replace'
 
-export interface UserProps {
+export class UserProps {
+  @IsString()
   name: string
+
+  @IsString()
   role: string
+
+  @IsString()
   email: string
+
+  @IsString()
   password: string
+
+  @IsDate()
   createdAt: Date
+
+  @IsBoolean()
   admin: boolean
+
   organizationId?: string | null
   customerDemandId?: string[] | null
 }

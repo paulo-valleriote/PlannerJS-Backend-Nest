@@ -1,14 +1,24 @@
+import { BadRequestException } from '@nestjs/common'
+import { IsDate, IsString } from 'class-validator'
 import { randomUUID } from 'crypto'
 import { Replace } from 'src/helpers/Replace'
 
-export interface CustomerProps {
+class CustomerProps {
+  @IsString()
   name: string
+
+  @IsDate()
   createdAt: Date
-  externalInfoLink: string | null
+
+  @IsString()
   activityField: string
-  delayedPosts?: number
-  activeCampaigns?: number
+
+  @IsString()
   organizationId: string
+
+  activeCampaigns?: number
+
+  externalInfoLink: string | null
 }
 
 export class Customer {
@@ -36,6 +46,10 @@ export class Customer {
   }
 
   public set externalInfoLink(externalInfoLink: string | null) {
+    if (typeof externalInfoLink !== 'string' && externalInfoLink !== null) {
+      throw new BadRequestException('External Info link must be a string')
+    }
+
     this.props.externalInfoLink = externalInfoLink
   }
 
@@ -49,14 +63,6 @@ export class Customer {
 
   public get activityField(): string {
     return this.props.activityField
-  }
-
-  public set delayedPosts(delayedPosts: number | null | undefined) {
-    this.props.delayedPosts = delayedPosts || 0
-  }
-
-  public get delayedPosts(): number | null | undefined {
-    return this.props.delayedPosts
   }
 
   public set activeCampaigns(activeCampaigns: number | null | undefined) {

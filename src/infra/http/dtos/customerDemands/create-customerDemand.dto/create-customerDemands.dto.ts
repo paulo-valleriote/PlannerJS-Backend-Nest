@@ -17,8 +17,8 @@ export class CreateCustomerDemandsDto {
   endLine: string
 
   @IsString()
-  designer: string | null
+  designer: string
 
   @IsString()
-  copywriter: string | null
+  copywriter: string
 }

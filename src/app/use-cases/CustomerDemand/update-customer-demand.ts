@@ -9,8 +9,8 @@ interface UpdateCustomerDemandRequest {
     name?: string
     description?: string
     endLine?: string
-    designer?: string | null
-    copywriter?: string | null
+    designer?: string
+    copywriter?: string
     readyToSend?: boolean
     readyToPost?: boolean
     posted?: boolean

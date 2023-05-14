@@ -19,7 +19,6 @@ export class PrismaCustomerRepository implements CustomerRepository {
         organizationId: customer.organizationId,
         activityField: customer.activityField,
         activeCampaigns: customer.activeCampaigns || 0,
-        delayedPosts: customer.delayedPosts || 0,
       },
     })
   }
