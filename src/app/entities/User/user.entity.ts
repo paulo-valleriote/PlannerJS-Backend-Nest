@@ -13,8 +13,8 @@ export interface UserProps {
 }
 
 export class User {
-  private _id: string
-  private props: UserProps
+  private readonly _id: string
+  private readonly props: UserProps
 
   constructor(props: Replace<UserProps, { createdAt?: Date }>) {
     this._id = randomUUID()

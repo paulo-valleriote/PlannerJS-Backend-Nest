@@ -38,6 +38,22 @@ export class CustomerDemand {
     return this.props.name
   }
 
+  public set description(description: string) {
+    this.props.description = description
+  }
+
+  public get description(): string {
+    return this.props.description
+  }
+
+  public set createdAt(createdAt: Date) {
+    this.props.createdAt = createdAt
+  }
+
+  public get createdAt(): Date {
+    return this.props.createdAt
+  }
+
   public set endLine(endLine: Date | null) {
     this.props.endLine = endLine || null
   }
@@ -84,5 +100,13 @@ export class CustomerDemand {
 
   public get posted(): boolean | undefined {
     return this.props.posted
+  }
+
+  public set customerId(customerId: string) {
+    this.props.customerId = customerId
+  }
+
+  public get customerId(): string {
+    return this.props.customerId
   }
 }

@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common'
-import { CustomerRepository } from '../../../../src/app/repositories/Customer/customer-repository'
+import { CustomerRepository } from '@app/repositories/Customer/customer-repository'
 
 interface UpdateCustomerRequest {
   id: string
   customer: {
-    name: string
-    externalInfoLink: string
-    activityField: string
-    organizationId: string
+    name?: string
+    externalInfoLink?: string
+    activityField?: string
+    organizationId?: string
   }
 }
 
@@ -16,6 +16,8 @@ export class UpdateCustomer {
   constructor(private customerDemandRepository: CustomerRepository) {}
 
   async execute(request: UpdateCustomerRequest): Promise<void> {
-    await this.customerDemandRepository.update(request.id, request.customer)
+    await this.customerDemandRepository.update(request.id, {
+      ...request.customer,
+    })
   }
 }

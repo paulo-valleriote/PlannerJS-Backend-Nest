@@ -2,20 +2,20 @@ import { IsDate, IsString } from 'class-validator'
 
 export class CreateCustomerDemandsDto {
   @IsString()
-  readonly customerId: string
+  customerId: string
 
   @IsString()
-  readonly name: string
+  name: string
 
   @IsString()
-  readonly description: string
+  description: string
 
   @IsDate()
-  readonly endLine: Date | null
+  endLine: Date | null
 
   @IsString()
-  readonly designer: string | null
+  designer: string | null
 
   @IsString()
-  readonly copywriter: string | null
+  copywriter: string | null
 }

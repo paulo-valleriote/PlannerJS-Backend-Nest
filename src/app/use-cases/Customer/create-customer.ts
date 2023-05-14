@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common'
-import { Customer } from '../../../../src/app/entities/Customer/customer.entity'
-import { CustomerRepository } from '../../../../src/app/repositories/Customer/customer-repository'
+import { Customer } from '@app/entities/Customer/customer.entity'
+import { CustomerRepository } from '@app/repositories/Customer/customer-repository'
 
 interface CreateCustomerRequest {
   name: string
-  externalInfoLink: string
+  externalInfoLink?: string
   activityField: string
   organizationId: string
 }
@@ -16,6 +16,7 @@ export class CreateCustomer {
   async execute(request: CreateCustomerRequest): Promise<Customer> {
     const customer = new Customer({
       ...request,
+      externalInfoLink: request.externalInfoLink || '',
     })
 
     await this.customerDemandRepository.create(customer)

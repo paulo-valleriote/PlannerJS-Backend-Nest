@@ -1,6 +1,7 @@
 import { CustomerRepository } from '../../src/app/repositories/Customer/customer-repository'
 import { Customer } from '../../src/app/entities/Customer/customer.entity'
 import { UpdateCustomerDto } from '../../src/infra/http/dtos/customers/update-customer.dto/update-customer.dto'
+import { Replace } from 'src/helpers/Replace'
 
 export class InMemoryCustomerRepository implements CustomerRepository {
   public customers: Customer[] = []
@@ -21,7 +22,9 @@ export class InMemoryCustomerRepository implements CustomerRepository {
     Object.assign(this.customers[customerIndex], customer)
   }
 
-  async findById(id: string): Promise<Customer> {
+  async findById(
+    id: string,
+  ): Promise<Replace<Customer, { _id?: string } | Customer>> {
     const customer = this.customers.find(
       (customerInMemory) => customerInMemory.id === id,
     )
@@ -33,7 +36,7 @@ export class InMemoryCustomerRepository implements CustomerRepository {
     return customer
   }
 
-  async list(): Promise<Customer[]> {
+  async list(): Promise<Replace<Customer, { _id?: string } | Customer>[]> {
     return this.customers
   }
 

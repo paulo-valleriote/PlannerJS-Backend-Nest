@@ -1,4 +1,4 @@
-import { InMemoryCustomerRepository } from '../../../../test/repositories/in-memory-customers.repository'
+import { InMemoryCustomerRepository } from '@test/repositories/in-memory-customers-repository'
 import { CreateCustomer } from './create-customer'
 
 describe('Customer', () => {

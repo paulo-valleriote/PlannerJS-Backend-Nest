@@ -27,13 +27,13 @@ export class CustomerDemandsController {
   ) {}
 
   @Get()
-  async findAll() {
-    return await this.listCustomerDemands.execute()
+  async findAll(@Body() customerId: string) {
+    return await this.listCustomerDemands.execute(customerId)
   }
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    return await this.findCustomerDemandById.execute(id)
+    return await this.findCustomerDemandById.execute({ customerDemandId: id })
   }
 
   @Post()
@@ -46,14 +46,28 @@ export class CustomerDemandsController {
     @Param('id') id: string,
     @Body() updateCustomerDemandDTO: UpdateCustomerDemandsDto,
   ) {
+    if (!id || !updateCustomerDemandDTO.customerId) {
+      throw new Error('Missing identifications')
+    }
+
     await this.updateCustomerDemand.execute({
-      id,
-      customerDemand: updateCustomerDemandDTO,
+      customerDemandId: id,
+      customerId: updateCustomerDemandDTO.customerId,
+      customerDemand: {
+        name: updateCustomerDemandDTO.name,
+        description: updateCustomerDemandDTO.description,
+        endLine: updateCustomerDemandDTO.endLine,
+        designer: updateCustomerDemandDTO.designer,
+        copywriter: updateCustomerDemandDTO.copywriter,
+      },
     })
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
-    await this.deleteCustomerDemand.execute(id)
+  async remove(@Param('id') id: string, @Body() customerId: string) {
+    await this.deleteCustomerDemand.execute({
+      customerDemandId: id,
+      customerId,
+    })
   }
 }

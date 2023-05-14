@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common'
-import { Organization } from 'src/app/entities/Organization/organization.entity'
-import { OrganizationRepository } from 'src/app/repositories/Organization/organization-repository'
+import { OrganizationRepository } from '@app/repositories/Organization/organization-repository'
+import { ListOrganizationDto } from '@infra/http/dtos/organizations/list-organization.dto/list-organization.dto'
 
 @Injectable()
 export class ListOrganization {
   constructor(private organizationsRepository: OrganizationRepository) {}
 
-  async execute(): Promise<Organization[]> {
+  async execute(): Promise<ListOrganizationDto[]> {
     const organizations = await this.organizationsRepository.list()
 
     if (!organizations) {

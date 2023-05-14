@@ -5,7 +5,7 @@ export class CreateCustomerDto {
   name: string
 
   @IsString()
-  externalInfoLink: string
+  externalInfoLink?: string
 
   @IsString()
   activityField: string

@@ -1,20 +1,16 @@
 import { Module } from '@nestjs/common'
 
-import { UsersController } from './controllers/users.controller'
-import { OrganizationsController } from './controllers/organizations.controller'
-import { CustomersController } from './controllers/customers.controller'
-import { CustomerDemandsController } from './controllers/customerDemands.controller'
-import { CreateUser } from 'src/app/use-cases/User/create-user'
-import { DatabaseModule } from '../database/database.module'
+import { OrganizationsModule } from './controllers/organizations.module'
+import { UsersModule } from './controllers/users.module'
+import { CustomersModule } from './controllers/customers.module'
+import { CustomerDemandsModule } from './controllers/customerDemands.module'
 
 @Module({
-  imports: [DatabaseModule],
-  controllers: [
-    UsersController,
-    OrganizationsController,
-    CustomersController,
-    CustomerDemandsController,
+  imports: [
+    OrganizationsModule,
+    UsersModule,
+    CustomersModule,
+    CustomerDemandsModule,
   ],
-  providers: [CreateUser],
 })
 export class HttpModule {}

@@ -7,11 +7,11 @@ export class UpdateCustomerDemandsDto extends PartialType(
   CreateCustomerDemandsDto,
 ) {
   @IsBoolean()
-  readyToSend?: boolean | undefined
+  readyToSend?: boolean
 
   @IsBoolean()
-  readyToPost?: boolean | undefined
+  readyToPost?: boolean
 
   @IsBoolean()
-  posted?: boolean | undefined
+  posted?: boolean
 }

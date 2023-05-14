@@ -1,13 +1,19 @@
 import { Injectable } from '@nestjs/common'
-import { CustomerDemandsRepository } from 'src/app/repositories/CustomerDemands/customer-demands-repository'
+import { CustomerDemandsRepository } from '@app/repositories/CustomerDemands/customer-demands-repository'
+
+interface DeleteCustomerDemandRequest {
+  customerDemandId: string
+  customerId: string
+}
 
 @Injectable()
 export class DeleteCustomerDemand {
   constructor(private customerDemandRepository: CustomerDemandsRepository) {}
 
-  async execute(request: string): Promise<void> {
-    const customerDemandId = request
-
-    await this.customerDemandRepository.delete(customerDemandId)
+  async execute(request: DeleteCustomerDemandRequest): Promise<void> {
+    await this.customerDemandRepository.delete(
+      request.customerDemandId,
+      request.customerId,
+    )
   }
 }

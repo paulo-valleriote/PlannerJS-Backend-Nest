@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
-import { CustomerDemand } from 'src/app/entities/CustomerDemands/customerDemands.entity'
-import { CustomerDemandsRepository } from 'src/app/repositories/CustomerDemands/customer-demands-repository'
+import { CustomerDemand } from '@app/entities/CustomerDemands/customerDemands.entity'
+import { CustomerDemandsRepository } from '@app/repositories/CustomerDemands/customer-demands-repository'
 
 interface CreateCustomerDemandRequest {
   customerId: string
@@ -18,6 +18,7 @@ export class CreateCustomerDemand {
   async execute(request: CreateCustomerDemandRequest): Promise<CustomerDemand> {
     const customerDemand = new CustomerDemand({
       ...request,
+      endLine: request.endLine || null,
     })
 
     await this.customerDemandRepository.create(customerDemand)

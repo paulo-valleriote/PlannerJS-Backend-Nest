@@ -1,4 +1,4 @@
-import { InMemoryUsersRepository } from '../../../../test/repositories/in-memory-users-repository'
+import { InMemoryUsersRepository } from '@test/repositories/in-memory-users-repository'
 import { CreateUser } from './create-user'
 import { FindUserById } from './find-user-by-id'
 

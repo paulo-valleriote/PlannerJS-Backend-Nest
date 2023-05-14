@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { OrganizationRepository } from 'src/app/repositories/Organization/organization-repository'
+import { OrganizationRepository } from '@app/repositories/Organization/organization-repository'
 
 @Injectable()
 export class DeleteOrganization {

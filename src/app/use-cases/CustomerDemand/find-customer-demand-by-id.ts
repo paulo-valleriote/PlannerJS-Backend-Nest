@@ -1,16 +1,19 @@
 import { Injectable } from '@nestjs/common'
-import { CustomerDemand } from 'src/app/entities/CustomerDemands/customerDemands.entity'
-import { CustomerDemandsRepository } from 'src/app/repositories/CustomerDemands/customer-demands-repository'
+import { CustomerDemandsRepository } from '@app/repositories/CustomerDemands/customer-demands-repository'
+import { ListCustomerDemandDto } from '@infra/http/dtos/customerDemands/list-customerDemand.dto/list-customerDemand.dto'
 
+interface FindCustomerDemandRequest {
+  customerDemandId: string
+}
 @Injectable()
 export class FindCustomerDemandById {
   constructor(private customerDemandRepository: CustomerDemandsRepository) {}
 
-  async execute(request: string): Promise<CustomerDemand> {
-    const customerDemandId = request
-
+  async execute(
+    request: FindCustomerDemandRequest,
+  ): Promise<ListCustomerDemandDto> {
     const customerDemand = await this.customerDemandRepository.findById(
-      customerDemandId,
+      request.customerDemandId,
     )
 
     return customerDemand

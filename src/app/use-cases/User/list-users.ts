@@ -1,6 +1,6 @@
-import { UsersRepository } from '../../repositories/User/users-repository'
+import { UsersRepository } from '@app/repositories/User/users-repository'
 import { Injectable } from '@nestjs/common'
-import { ListUserDto } from 'src/infra/http/dtos/users/list-user.dto/list-user.dto'
+import { ListUserDto } from '@infra/http/dtos/users/list-user.dto/list-user.dto'
 
 @Injectable()
 export class ListUsers {
