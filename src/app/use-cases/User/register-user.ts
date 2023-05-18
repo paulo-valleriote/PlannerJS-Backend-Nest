@@ -2,7 +2,7 @@ import { User } from '@app/entities/User/user.entity'
 import { UsersRepository } from '@app/repositories/User/users-repository'
 import { Injectable } from '@nestjs/common'
 
-interface CreateUserRequest {
+interface RegisterUserRequest {
   name: string
   role: string
   email: string
@@ -11,10 +11,10 @@ interface CreateUserRequest {
 }
 
 @Injectable()
-export class CreateUser {
+export class RegisterUser {
   constructor(private usersRepository: UsersRepository) {}
 
-  async execute(request: CreateUserRequest): Promise<User> {
+  async execute(request: RegisterUserRequest): Promise<User> {
     const { admin, email, name, password, role } = request
 
     const user = new User({
@@ -25,7 +25,7 @@ export class CreateUser {
       admin,
     })
 
-    await this.usersRepository.create(user)
+    await this.usersRepository.register(user)
 
     return user
   }

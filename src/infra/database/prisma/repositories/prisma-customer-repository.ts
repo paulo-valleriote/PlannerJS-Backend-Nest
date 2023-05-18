@@ -1,5 +1,9 @@
 import { PrismaService } from '../prisma.service'
-import { Injectable, NotFoundException } from '@nestjs/common'
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common'
 
 import { CustomerRepository } from 'src/app/repositories/Customer/customer-repository'
 import { Customer } from 'src/app/entities/Customer/customer.entity'
@@ -11,6 +15,18 @@ export class PrismaCustomerRepository implements CustomerRepository {
   constructor(private prismaService: PrismaService) {}
 
   async create(customer: Customer): Promise<void> {
+    if (!customer.organizationId) {
+      throw new BadRequestException('An organization id must be provided')
+    }
+
+    await this.prismaService.organization
+      .findUnique({ where: { id: customer.organizationId } })
+      .catch((err) => {
+        throw new BadRequestException('Organization does not exists', {
+          cause: err,
+        })
+      })
+
     await this.prismaService.customer.create({
       data: {
         id: customer.id,

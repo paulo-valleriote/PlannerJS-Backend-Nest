@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common'
 import { PrismaService } from '../prisma.service'
 import { OrganizationRepository } from 'src/app/repositories/Organization/organization-repository'
 import { PrismaOrganizationRepository } from './prisma-organization-repository'
-import { OrganizationsModule } from '@infra/http/controllers/organizations.module'
 
 @Module({
   providers: [

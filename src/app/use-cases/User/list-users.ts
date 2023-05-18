@@ -10,7 +10,7 @@ export class ListUsers {
     const users = await this.usersRepository.list()
 
     if (users.length <= 0) {
-      throw new EntityNotFound('User')
+      throw new EntityNotFound('Users')
     }
 
     return users

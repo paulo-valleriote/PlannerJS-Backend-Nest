@@ -14,7 +14,9 @@ export class CreateOrganization {
 
   async execute(request: CreateOrganizationRequest): Promise<Organization> {
     const organization = new Organization({
-      ...request,
+      email: request.email,
+      name: request.name,
+      password: request.password,
     })
 
     await this.organizationsRepository.create(organization)

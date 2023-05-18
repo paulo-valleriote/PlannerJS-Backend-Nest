@@ -36,7 +36,7 @@ export class CustomersController {
     return this.findCustomerById.execute(id)
   }
 
-  @Post()
+  @Post('')
   async create(@Body() createCustomerDTO: CreateCustomerDto) {
     this.createCustomer.execute(createCustomerDTO)
   }

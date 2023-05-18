@@ -1,6 +1,6 @@
 import { IsBoolean, IsString } from 'class-validator'
 
-export class CreateUserDto {
+export class RegisterUserDto {
   @IsString()
   name: string
   @IsString()

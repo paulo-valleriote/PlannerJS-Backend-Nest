@@ -1,5 +1,9 @@
 import { PrismaService } from '../prisma.service'
-import { Injectable, NotFoundException } from '@nestjs/common'
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common'
 
 import { OrganizationRepository } from '../../../../../src/app/repositories/Organization/organization-repository'
 import { Organization } from '../../../../../src/app/entities/Organization/organization.entity'
@@ -11,6 +15,14 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
   constructor(private prismaService: PrismaService) {}
 
   async create(organization: Organization): Promise<void> {
+    if (
+      await this.prismaService.organization.findUnique({
+        where: { email: organization.email },
+      })
+    ) {
+      throw new BadRequestException('Organization already exists')
+    }
+
     await this.prismaService.organization.create({
       data: {
         id: organization.id,

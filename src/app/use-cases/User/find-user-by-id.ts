@@ -17,7 +17,7 @@ export class FindUserById {
 
     const user = await this.usersRepository.findById(userId)
 
-    if (Object.values(user).length < 1) {
+    if (Object.values(user).includes(undefined)) {
       throw new EntityNotFound('User')
     }
 

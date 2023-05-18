@@ -1,40 +1,38 @@
-import { IsDate, IsEmail, IsString, IsStrongPassword } from 'class-validator'
+import { hashSync } from 'bcrypt'
 import { randomUUID } from 'crypto'
 import { Replace } from 'src/helpers/Replace'
 
 export class OrganizationProps {
-  @IsString()
   name: string
 
-  @IsEmail()
   email: string
 
-  @IsStrongPassword({
-    minLength: 8,
-    minLowercase: 1,
-    minUppercase: 1,
-    minNumbers: 1,
-  })
   password: string
 
-  @IsDate()
   createdAt: Date
 }
 
 export class Organization {
   private _id: string
+  private _admin: boolean
   private props: OrganizationProps
 
   constructor(props: Replace<OrganizationProps, { createdAt?: Date }>) {
     this._id = randomUUID()
+    this._admin = true
     this.props = {
       ...props,
+      password: hashSync(props.password, 8),
       createdAt: props.createdAt || new Date(),
     }
   }
 
   public get id(): string {
     return this._id
+  }
+
+  public get admin(): boolean {
+    return this._admin
   }
 
   public set name(name: string) {
@@ -54,7 +52,7 @@ export class Organization {
   }
 
   public set password(password: string) {
-    this.props.password = password
+    this.props.password = hashSync(password, 8)
   }
 
   public get password(): string {

@@ -8,19 +8,22 @@ import {
   Post,
 } from '@nestjs/common'
 
-import { CreateUser } from 'src/app/use-cases/User/create-user'
+import { RegisterUser } from 'src/app/use-cases/User/register-user'
 import { UpdateUser } from 'src/app/use-cases/User/update-user'
 import { ListUsers } from 'src/app/use-cases/User/list-users'
 import { FindUserById } from 'src/app/use-cases/User/find-user-by-id'
 
-import { CreateUserDto } from '../dtos/users/create-user.dto/create-user.dto'
+import { RegisterUserDto } from '../dtos/users/register-user.dto/register-user.dto'
 import { UpdateUserDto } from '../dtos/users/update-user.dto/update-user.dto'
 import { DeleteUser } from 'src/app/use-cases/User/delete-user'
+import { LoginUserDto } from '../dtos/users/login-user.dto/login-user.dto'
+import { LoginUser } from '@app/use-cases/User/login-user'
 
 @Controller('users')
 export class UsersController {
   constructor(
-    private createUser: CreateUser,
+    private registerUser: RegisterUser,
+    private loginUser: LoginUser,
     private updateUser: UpdateUser,
     private listUsers: ListUsers,
     private findUserById: FindUserById,
@@ -37,9 +40,14 @@ export class UsersController {
     return this.findUserById.execute(id)
   }
 
-  @Post()
-  async create(@Body() createUserDTO: CreateUserDto) {
-    await this.createUser.execute({ ...createUserDTO })
+  @Post('/register')
+  async register(@Body() registerUserDTO: RegisterUserDto) {
+    await this.registerUser.execute({ ...registerUserDTO })
+  }
+
+  @Post('/login')
+  async login(@Body() loginUserDTO: LoginUserDto) {
+    return await this.loginUser.execute({ ...loginUserDTO })
   }
 
   @Patch(':id')

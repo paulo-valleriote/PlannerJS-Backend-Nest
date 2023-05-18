@@ -10,7 +10,7 @@ export class ListOrganization {
   async execute(): Promise<ListOrganizationDto[]> {
     const organizations = await this.organizationsRepository.list()
 
-    if (!organizations) {
+    if (organizations.length <= 0) {
       throw new EntityNotFound('Organizations')
     }
 

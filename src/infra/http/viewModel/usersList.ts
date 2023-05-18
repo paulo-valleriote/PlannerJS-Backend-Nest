@@ -2,7 +2,6 @@ interface UsersListViewModel {
   id: string
   name: string
   email: string
-  password: string
   createdAt: Date
   admin: boolean
   customerDemands?: object[]
@@ -16,7 +15,6 @@ export class UsersList {
         id: user.id,
         name: user.name,
         email: user.email,
-        password: user.password,
         createdAt: user.createdAt,
         admin: user.admin,
       }
@@ -30,7 +28,6 @@ export class UsersList {
       id: user.id,
       name: user.name,
       email: user.email,
-      password: user.password,
       createdAt: user.createdAt,
       admin: user.admin,
       customerDemands: user.customerDemands ? user.customerDemands : [],
