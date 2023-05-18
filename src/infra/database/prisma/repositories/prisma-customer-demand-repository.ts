@@ -1,5 +1,5 @@
 import { PrismaService } from '../prisma.service'
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 
 import { UpdateCustomerDemandsDto } from '../../../../../src/infra/http/dtos/customerDemands/update-customerDemand.dto/update-customerDemands.dto'
 import { CustomerDemandsRepository } from '../../../../app/repositories/CustomerDemands/customer-demands-repository'
@@ -34,21 +34,28 @@ export class PrismaCustomerDemandRepository
     customerDemandId: string,
     customerDemand: UpdateCustomerDemandsDto,
   ): Promise<void> {
-    await this.prismaService.customerDemand.update({
-      data: {
-        name: customerDemand.name,
-        description: customerDemand.description,
-        copywriter: customerDemand.copywriter,
-        designer: customerDemand.designer,
-        endLine: customerDemand.endLine,
-        readyToSend: customerDemand.readyToSend,
-        readyToPost: customerDemand.readyToPost,
-        posted: customerDemand.posted,
-      },
-      where: {
-        id: customerDemandId,
-      },
-    })
+    await this.prismaService.customerDemand
+      .update({
+        data: {
+          name: customerDemand.name,
+          description: customerDemand.description,
+          copywriter: customerDemand.copywriter,
+          designer: customerDemand.designer,
+          endLine: customerDemand.endLine,
+          readyToSend: customerDemand.readyToSend,
+          readyToPost: customerDemand.readyToPost,
+          posted: customerDemand.posted,
+        },
+        where: {
+          id: customerDemandId,
+        },
+      })
+      .catch((err) => {
+        throw new NotFoundException(
+          'Customer Demand not found, update operation has been cancelled',
+          { cause: err },
+        )
+      })
   }
 
   async findById(customerDemandId: string): Promise<ListCustomerDemandDto> {
@@ -83,8 +90,15 @@ export class PrismaCustomerDemandRepository
   }
 
   async delete(customerDemandId: string): Promise<void> {
-    await this.prismaService.customerDemand.delete({
-      where: { id: customerDemandId },
-    })
+    await this.prismaService.customerDemand
+      .delete({
+        where: { id: customerDemandId },
+      })
+      .catch((err) => {
+        throw new NotFoundException(
+          'Customer Demand not found, delete operation has been cancelled',
+          { cause: err },
+        )
+      })
   }
 }

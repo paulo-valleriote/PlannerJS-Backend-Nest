@@ -1,5 +1,5 @@
 import { PrismaService } from '../prisma.service'
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 
 import { CustomerRepository } from 'src/app/repositories/Customer/customer-repository'
 import { Customer } from 'src/app/entities/Customer/customer.entity'
@@ -24,14 +24,21 @@ export class PrismaCustomerRepository implements CustomerRepository {
   }
 
   async update(id: string, customer: UpdateCustomerDto): Promise<void> {
-    await this.prismaService.customer.update({
-      data: {
-        ...customer,
-      },
-      where: {
-        id,
-      },
-    })
+    await this.prismaService.customer
+      .update({
+        data: {
+          ...customer,
+        },
+        where: {
+          id,
+        },
+      })
+      .catch((err) => {
+        throw new NotFoundException(
+          'Customer not found, update operation has been cancelled',
+          { cause: err },
+        )
+      })
   }
 
   async findById(id: string): Promise<Replace<Customer, { _id?: string }>> {
@@ -61,6 +68,11 @@ export class PrismaCustomerRepository implements CustomerRepository {
   }
 
   async delete(id: string): Promise<void> {
-    await this.prismaService.customer.delete({ where: { id } })
+    await this.prismaService.customer.delete({ where: { id } }).catch((err) => {
+      throw new NotFoundException(
+        'Customer not found, delete operation has been cancelled',
+        { cause: err },
+      )
+    })
   }
 }

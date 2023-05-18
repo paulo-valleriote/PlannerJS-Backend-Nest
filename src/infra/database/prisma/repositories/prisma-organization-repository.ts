@@ -1,5 +1,5 @@
 import { PrismaService } from '../prisma.service'
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 
 import { OrganizationRepository } from '../../../../../src/app/repositories/Organization/organization-repository'
 import { Organization } from '../../../../../src/app/entities/Organization/organization.entity'
@@ -37,8 +37,8 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
       await this.prismaService.organization.findUnique({
         where: { id },
         include: {
-          Customer: true,
-          User: true,
+          Customers: true,
+          Users: true,
         },
       })
 
@@ -60,6 +60,13 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
   }
 
   async delete(id: string): Promise<void> {
-    await this.prismaService.organization.delete({ where: { id } })
+    await this.prismaService.organization
+      .delete({ where: { id } })
+      .catch((err) => {
+        throw new NotFoundException(
+          'Organization not found, delete operation has been cancelled',
+          { cause: err },
+        )
+      })
   }
 }

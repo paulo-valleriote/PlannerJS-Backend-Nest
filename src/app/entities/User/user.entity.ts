@@ -1,5 +1,11 @@
 import { hashSync } from 'bcrypt'
-import { IsBoolean, IsDate, IsString } from 'class-validator'
+import {
+  IsBoolean,
+  IsDate,
+  IsEmail,
+  IsString,
+  IsStrongPassword,
+} from 'class-validator'
 import { randomUUID } from 'crypto'
 import { Replace } from 'src/helpers/Replace'
 
@@ -10,10 +16,16 @@ export class UserProps {
   @IsString()
   role: string
 
-  @IsString()
+  @IsEmail()
   email: string
 
-  @IsString()
+  @IsStrongPassword({
+    minLength: 8,
+    minLowercase: 1,
+    minUppercase: 1,
+    minNumbers: 1,
+    minSymbols: 1,
+  })
   password: string
 
   @IsDate()

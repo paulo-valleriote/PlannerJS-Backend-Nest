@@ -1,4 +1,4 @@
-import { IsDate, IsString } from 'class-validator'
+import { IsDate, IsEmail, IsString, IsStrongPassword } from 'class-validator'
 import { randomUUID } from 'crypto'
 import { Replace } from 'src/helpers/Replace'
 
@@ -6,10 +6,15 @@ export class OrganizationProps {
   @IsString()
   name: string
 
-  @IsString()
+  @IsEmail()
   email: string
 
-  @IsString()
+  @IsStrongPassword({
+    minLength: 8,
+    minLowercase: 1,
+    minUppercase: 1,
+    minNumbers: 1,
+  })
   password: string
 
   @IsDate()
